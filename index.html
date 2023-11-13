@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- react project sort -->
+    <!-- useState -->
+    const [categorizedProducts, setCategorizedProducts] = useState({
+    lowPrice: [],
+    highPrice: [],
+    });
+    <!-- const er niche -->
+    const handleSortChange = (event) => {
+    setPriceRange(event.target.value);
+    };
+
+    useEffect(() => {
+    // Categorize products based on price range
+    const lowPriceProducts = products.filter((product) => product.price <= 500); const
+        highPriceProducts=products.filter((product)=> product.price > 500);
+
+        // Update state with categorized products
+        setCategorizedProducts({
+        lowPrice: lowPriceProducts,
+        highPrice: highPriceProducts,
+        });
+        }, [products]);
+
+
+
+        <!-- return div in -->
+        <div>
+            <form>
+                <label>Sort by:</label>
+                <select name="priceRange" value={priceRange} onChange={handleSortChange}>
+                    <option value="all">All</option>
+                    <option value="low">Price 500 low</option>
+                    <option value="high">Price 500 high</option>
+                </select>
+            </form>
+            <div>
+                {priceRange === 'low' ? (
+                categorizedProducts.lowPrice.map((product) => (
+                <ShopProduct key={product._id} product={product} />
+                ))
+                ) : priceRange === 'high' ? (
+                categorizedProducts.highPrice.map((product) => (
+                <ShopProduct key={product._id} product={product} />
+                ))
+                ) : (
+                products.map((product) =>
+                <ShopProduct key={product._id} product={product} />)
+                )}
+            </div>
+        </div>
+</body>
+
+</html>
